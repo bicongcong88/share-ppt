@@ -1,0 +1,22 @@
+{
+  "name": "share-ppt",
+  "version": "1.0.0",
+  "description": "share ppt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bicongcong88/share-ppt.git"
+  },
+  "keywords": [
+    "share-ppt"
+  ],
+  "author": "bixiaocong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bicongcong88/share-ppt/issues"
+  },
+  "homepage": "https://github.com/bicongcong88/share-ppt#readme"
+}
