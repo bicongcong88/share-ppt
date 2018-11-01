@@ -7,7 +7,7 @@ theme: moon
 highlightStyle: monokai_sublime
 headFiles:
 usemathjax: no
-date: 2018年10月16日
+date: 2018年11月1日
 
 
 <!-- #0 -->
@@ -16,9 +16,6 @@ date: 2018年10月16日
 # 前端代码规范
 
 --------------------------------------------------------------------------------
-
-<br>
-<br>
 
 
 - 越规范, 越效率
@@ -29,7 +26,7 @@ date: 2018年10月16日
 
 
 <div style="float:right;margin-top:250px">
-2018年10月25日 <br><br>
+2018年11月01日 <br><br>
 分享人：毕小葱
 </div>
 
@@ -44,9 +41,9 @@ date: 2018年10月16日
 
 - [通用规范](#2)
 - [HTML 规范](#4)
-- [CSS 规范](#5)
-- [VUE 规范](#6)
-- [JS 规范](#7)
+- [CSS 规范](#6)
+- [VUE 规范](#10)
+- [JS 规范](#14)
 
 <!-- #2 -->
 [slide]
@@ -116,9 +113,60 @@ date: 2018年10月16日
 - 尽量不要在html里做复杂的逻辑判断
 - 带上必要注释
 
-
-
 <!-- #5 -->
+[slide]
+# 优化代码Demo
+
+- 源代码
+```
+<div class="title">
+    <div v-if="type=='loan' || type=='setbank' || type === 'bInstal'">
+        <img @click="hideSelectList" src="XXXX">
+        <h2>{{type=='setbank'? '设置自动扣款卡': '收款银行卡'}}</h2>
+        <h3 v-if="type=='setbank'">选定或添加银行卡即同意该卡为默认代扣卡</h3>
+    </div>
+    <div v-else>
+        <span class="left-arrow" @click="hideSelectList"></span>
+        <h2>选择银行卡</h2>
+    </div>
+</div>
+```
+
+<!-- #6 -->
+[slide]
+
+- 修改后的代码
+```
+<div class="title">
+    <img v-if="ifShowClose" @click="hideSelectList" src="XXXX">
+    <span v-else class="left-arrow" @click="hideSelectList"></span>
+    <h2>{{title}}</h2>
+    <h3 v-if="type=='setbank'">选定或添加银行卡即同意该卡为默认代扣卡</h3>
+</div>
+```
+```
+ifShowClose() {
+    const showList = ['loan', 'setbank', 'bInstal']
+    return showList.includes(this.type)
+},
+title() {
+    switch (this.type) {
+        case 'loan':
+        case 'bInstal':
+            return '收款银行卡'
+        case 'setbank':
+            return '设置自动扣款卡'
+        default:
+            return '选择银行卡'
+    }
+}
+```
+
+
+
+
+
+<!-- #7 -->
 [slide]
 
 # CSS 规范
@@ -129,7 +177,7 @@ date: 2018年10月16日
 - 命名空间
 - 属性顺序
 
-<!-- #6 -->
+<!-- #8 -->
 [slide]
 
 # CSS 规范(-)
@@ -140,22 +188,22 @@ date: 2018年10月16日
 - 不允许所有的样式写在一行
 - 不推荐直接为标签写样式，容易全局污染，并且不易后人维护
 
-<!-- #7-->
+<!-- #9-->
 [slide]
 # CSS 规范(二)
 - `&` 配合 `命名空间` 写法, 注意全局污染
 
 ```
-    <div class="mine">
-        <div v-for="(item, index) in courseList" :key="index" class="mine-item">
-            <p class="mine-item-title">{{item.title}}</p>
-            <div class="mine-item-teacher">
-                <img class="mine-item-teacher-img" :src="item.teacherImage"/>
-                <span class="mine-item-teacher-name">{{item.teacherName}}</span>
-                <span class="mine-item-teacher-desc">{{item.teacherTitle}}</span>
-            </div>
+<div class="mine">
+    <div v-for="(item, index) in courseList" :key="index" class="mine-item">
+        <p class="mine-item-title">{{item.title}}</p>
+        <div class="mine-item-teacher">
+            <img class="mine-item-teacher-img" :src="item.teacherImage"/>
+            <span class="mine-item-teacher-name">{{item.teacherName}}</span>
+            <span class="mine-item-teacher-desc">{{item.teacherTitle}}</span>
         </div>
     </div>
+</div>
 ```
 ```
 .mine {
@@ -179,7 +227,7 @@ date: 2018年10月16日
 
 
 
-<!-- #8 -->
+<!-- #10 -->
 [slide]
 # CSS 规范(三)
 - 属性顺序
@@ -222,7 +270,7 @@ date: 2018年10月16日
 ```
 
 
-<!-- #9 -->
+<!-- #11 -->
 [slide]
 
 # VUE 规范
@@ -234,7 +282,7 @@ date: 2018年10月16日
 - 顺序
 
 
-<!-- #10 -->
+<!-- #12 -->
 [slide]
 
 # VUE 规范（规范一）
@@ -245,7 +293,10 @@ date: 2018年10月16日
 - 属性名: 小写 `:video-cover` 而不是 `:videoCover`
 - 属性值: 大写 `:video-cover="videoCover"`
 
-<!-- #11 -->
+
+
+
+<!-- #13 -->
 [slide]
 ```html
 
@@ -272,7 +323,7 @@ date: 2018年10月16日
 	@click="lessonClick(item)"
 >
 ```
-<!-- #12 -->
+<!-- #14 -->
 [slide]
 
 ## VUE 属性顺序
@@ -282,7 +333,7 @@ date: 2018年10月16日
 - 第四序列: `@xxx` 事件绑定
 
 
-<!-- #13 -->
+<!-- #15 -->
 [slide]
 
 # JS 规范
@@ -291,11 +342,12 @@ date: 2018年10月16日
 
 - 遵照ESlint
 - 多用ES6写法（变量声明const和let、模板字符串、箭头函数、展开运算符、数组的方法）
-- 变量名和方法名的定义
-- 每当拷贝代码的时候自省（能否可以抽离）
+- 注意变量名和方法名的定义
+- 推荐 === 严格等于
+- 每当拷贝代码的时候自省（能否抽离）
 
 
-<!-- #14 -->
+<!-- #16 -->
 [slide]
 # 优化代码demo
 
@@ -313,8 +365,40 @@ getRepayType:function(v){
     }
 },
 ```
+- 修改代码格式
+```
+getRepayType: function(v) {
+    if (v === '1') {
+        return '每月等额'
+    } else if (v === '2') {
+        return '等额本金'
+    } else if (v === '3') {
+        return '先息后本'
+    } else if (v === '7') {
+        return '按月等额本息'
+    }
+},
+```
 
-- 优化后的代码
+<!-- #17 -->
+[slide]
+- 优化后代码（一）
+```
+getRepayType: function(v) {
+    switch (v) {
+        case '1':
+            return '每月等额'
+        case '2':
+            return '等额本金'
+        case '3':
+            return '先息后本'
+        case '7':
+            return '按月等额本息'
+    }
+},
+```
+
+- 优化后的代码(二)
 ```
 getRepayType(type) {
     const repayTips = {
@@ -327,11 +411,8 @@ getRepayType(type) {
 },
 ```
 
-- 补充
- - 1 注意写法，空格会让代码更优雅
- - 2 推荐: JSON对象 > switch > if
 
-<!-- #15 -->
+<!-- #18 -->
 [slide]
 
 # 总结
